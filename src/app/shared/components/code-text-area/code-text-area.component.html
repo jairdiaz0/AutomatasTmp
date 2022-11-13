@@ -1,0 +1,29 @@
+<div class="col-12">
+  <form class="row" [formGroup]="form">
+    <div class="col-12 mt-3">
+      <div class="row">
+        <div class="col-9 p-0">
+          <input type="file" accept=".txt" formControlName="file" class="form-control" (change)="fileChanged($event)">
+        </div>
+        <div class="col-3 p-0 ps-5">
+          <button class="btn btn-warning fw-bold w-100 text-center ps-0 pe-0" (click)="sendData()">
+            Ejecutar
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 mt-3">
+      <div class="row">
+        <div class="col-1 p-0">
+          <textarea class="text-right w-100" id='lineCounter' wrap='off' readonly>1.</textarea>
+        </div>
+        <div class="col-11 p-0">
+          <textarea class="w-100" id='codeEditor' spellcheck="false" formControlName="textArea" wrap='off'
+            (keydown)="keyDown($event)"></textarea>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+</div>

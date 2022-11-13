@@ -1,0 +1,41 @@
+input[type="file"] {
+  font-family: monospace;
+  background-color: var(--background-color-1);
+  border: none;
+  color: var(--color-0);
+}
+
+input[type="file"]::file-selector-button {
+  background-color: var(--background-color-2);
+  font-style: oblique;
+  font-weight: bold;
+  color: var(--color-1);
+}
+
+#codeEditor,
+#lineCounter {
+  height: 75vh;
+  resize: none;
+  font-size: 1em;
+  line-height: 1.2;
+  outline: none;
+}
+#lineCounter {
+  padding-top: 1rem;
+  border-color: transparent;
+  overflow-y: hidden;
+  box-shadow: none;
+  text-align: right;
+
+  /* Determine appearance of line counter */
+  background-color: var(--background-color-1);
+  color: var(--color-0);
+}
+#codeEditor {
+  padding-top: 0.92rem;
+  padding-left: 1rem;
+  /* Determine appearance of code editor */
+  background-color: var(--background-color-0);
+  border-color: var(--background-color-0);
+  color: var(--color-1);
+}

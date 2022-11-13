@@ -1,0 +1,156 @@
+<div class="col-12 mt-3">
+  <div class="row">
+    <div class="col-12">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link navItem" [ngClass]="{'active': navItemSelected==0}"
+                  (click)="navItemSelected = 0">Lexico</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link navItem" [ngClass]="{'active': navItemSelected==1}"
+                  (click)="navItemSelected = 1">Sintactico</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link navItem" [ngClass]="{'active': navItemSelected==2}"
+                  (click)="navItemSelected = 2">Semantico</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link navItem" [ngClass]="{'active': navItemSelected==3}"
+                  (click)="navItemSelected = 3">Código Intermedio</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link navItem" [ngClass]="{'active': navItemSelected==4}"
+                  (click)="navItemSelected = 4">Código Optimizado</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="col-12" [ngClass]="navItemSelected==0 ? 'd-block' : 'd-none'">
+      <div class="tableConfig">
+        <table class="table table-bordered">
+          <thead class="table-dark" *ngIf="getLexTable().errors.length > 0">
+            <tr>
+              <th class="pe-5 col" *ngFor="let title of getLexTable().headers">{{title}}</th>
+            </tr>
+          </thead>
+          <tbody style="overflow-y:auto;">
+            <tr *ngFor="let token of getLexTable().errors"
+              [ngClass]="{'text-danger fw-bold': token.tokenLex.token=='NaN'}">
+              <td>{{token.line}}</td>
+              <td>{{token.value}}</td>
+              <td>{{token.tokenLex.type}}</td>
+            </tr>
+          </tbody>
+          <thead class="table-dark">
+            <tr>
+              <th class="pe-5 col" *ngFor="let title of getLexTable().headers">{{title}}</th>
+            </tr>
+          </thead>
+          <tbody style="overflow-y:auto;">
+            <tr *ngFor="let token of getLexTable().tokens"
+              [ngClass]="{'text-danger fw-bold': token.tokenLex.token=='NaN'}">
+              <td>{{token.line}}</td>
+              <td>{{token.value}}</td>
+              <td>{{token.tokenLex.type}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-12" [ngClass]="navItemSelected==1 && getLexTable().errors.length == 0 ? 'd-block' : 'd-none'">
+      <textarea class="form-control bg-secundary fw-bold" wrap='off' rows="5"
+        disabled>{{getSinErrorsInfo().length>0?getSinErrorsInfo()+"\n":''}}{{getSinMessageInfo()}}</textarea>
+    </div>
+    <div class="col-12" [ngClass]="navItemSelected==2 && getLexTable().errors.length == 0 && getSinErrorsInfo()=='' ? 'd-block' : 'd-none'">
+      <!-- <textarea class="form-control bg-secundary fw-bold" wrap='off' rows="5"
+            disabled>{{getSemErrorsInfo().length>0?getSemErrorsInfo()+"\n":'Todo OK'}}</textarea> -->
+      <div class="tableConfig">
+        <table class="table table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th class="pe-5 col" *ngFor="let title of getSemTable().headers">{{title}}</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="getSemTable().errors.length>0" style="overflow-y:auto;">
+            <tr *ngFor="let token of getSemTable().errors">
+              <td>{{token.line}}</td>
+              <td>{{token.lineOrigin}}</td>
+              <td>{{token.error}}</td>
+              <td>{{token.typeValue}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tableConfig">
+        <table class="table table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th class="pe-5 col">Identificador</th>
+              <th class="pe-5 col">Tipo Identificador</th>
+              <th class="pe-5 col">Tipo de Dato</th>
+            </tr>
+          </thead>
+          <tbody style="overflow-y:auto;">
+            <tr *ngFor="let token of getSemTable().tokens">
+              <td>{{token.token.value}}</td>
+              <td>{{token.type}}</td>
+              <td>{{token.valueType}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-12" [ngClass]="navItemSelected==3 && getLexTable().errors.length == 0 && getSinErrorsInfo()=='' ? 'd-block' : 'd-none'">
+      <div class="tableConfig">
+        <table class="table table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th class="pe-5 col">Identificador</th>
+              <th class="pe-5 col">Valor</th>
+              <th class="pe-5 col">
+                <div class="d-flex justify-content-around">
+                  <input (click)="navExpresionSelected = 0" type="radio" id="contactChoice1"
+                   name="contact" checked>
+                  <label for="contactChoice1">InFijo</label>
+
+                  <input (click)="navExpresionSelected = 1" type="radio" id="contactChoice2"
+                   name="contact">
+                  <label for="contactChoice2">PosFijo</label>
+
+                  <input (click)="navExpresionSelected = 2" type="radio" id="contactChoice3"
+                   name="contact">
+                  <label for="contactChoice3">PreFijo</label>
+                </div>
+              </th>
+              <!-- <th class="pe-5 col">PosFijo</th>
+              <th class="pe-5 col">PreFijo</th> -->
+            </tr>
+          </thead>
+          <tbody style="overflow-y:auto;">
+            <tr *ngFor="let token of getSemTable().tokens">
+              <td>{{token.token?.value}}</td>
+              <td>{{token.expresion?.value}}</td>
+              <td *ngIf="navExpresionSelected == 0">{{token.expresion?.inFijo}}</td>
+              <td *ngIf="navExpresionSelected == 1">{{token.expresion?.posFijo}}</td>
+              <td *ngIf="navExpresionSelected == 2">{{token.expresion?.preFijo}}</td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+    <div class="col-12" [ngClass]="navItemSelected==4 && getLexTable().errors.length == 0 && getSinErrorsInfo()=='' ? 'd-block' : 'd-none'">
+      <button class="btn btn-danger" (click)="sendCodeOptimizado(getCodeOptimizado())">Ingresar a Código</button>
+      <textarea class="form-control bg-secundary fw-bold" wrap='off' rows="5"
+        disabled>{{getCodeOptimizado()}}</textarea>
+    </div>
+  </div>
